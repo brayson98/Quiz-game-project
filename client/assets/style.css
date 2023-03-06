@@ -71,3 +71,22 @@ button {
     font-size: 1.5rem;
 
 }
+#restartBtn {
+    display: none;
+  }
+  
+  #answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+  }
+  
+  #answers li {
+    list-style: none;
+  }
+  
+  #answers button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
