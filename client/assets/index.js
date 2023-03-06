@@ -7,10 +7,14 @@ const literatureBtn = document.getElementById("literatureBtn");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
+const scoreEl = document.getElementById("score");
+const restartBtn = document.getElementById("restartBtn");
 
 geographyBtn.addEventListener("click", () => startQuiz("geography"));
 historyBtn.addEventListener("click", () => startQuiz("history"));
 literatureBtn.addEventListener("click", () => startQuiz("literature"));
+
+restartBtn.addEventListener("click", restartQuiz);
 
 async function startQuiz(category) {
   categoriesContainer.style.display = "none";
@@ -37,6 +41,7 @@ async function startQuiz(category) {
       button.addEventListener("click", () => {
         if (answer === question.correct_answer) {
           score++;
+          scoreEl.innerText = `Score: ${score}`;
           button.style.backgroundColor = "green";
         } else {
           button.style.backgroundColor = "red";
@@ -57,12 +62,15 @@ async function startQuiz(category) {
           } else {
             showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
           }
-        }, 2000);
+        }, 1500);
       });
       li.appendChild(button);
       answerListEl.appendChild(li);
     });
   }
+}
+function restartQuiz() {
+    location.reload();
 }
 
 async function fetchQuestions(category) {
