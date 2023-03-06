@@ -7,24 +7,45 @@
     <title>Quiz Game</title>
     <link rel="stylesheet" href="./assets/style.css">
     <script defer src="assets/index.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <section>
-        <div class="banner">
-            <img src="https://drive.google.com/uc?export=view&id=1QyO3WAbpLIAyeeiYr-KR6z1AtlXpwmI2" alt="logo" class="logo">
-            <h1>Quiz Game</h1>
-            <div id="categories">
-                <h2>Select a category:</h2>
+    <section class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="./assets/images/logo.png" alt="logo"/>
+            </div>
+            <div class="title">
+                <h1>Quiz Game</h1>
+            </div>
+           
+        </div>
+    </section>
+    <div class="divider"></div>
+    <section class="container">
+        <div id="categories">
+            <h2>Select category</h2>
+            <div class="categoryList">
                 <button id="geographyBtn">Geography</button>
                 <button id="historyBtn">History</button>
                 <button id="literatureBtn">Literature</button>
-              </div>
-              <p> <span id="score">Score: 0</span></p>
-              <div id="questionContainer" style="display:none;">
-                <h2 id="question"></h2>
-                <ul id="answers"></ul>
-              </div>
-              <button id="restartBtn">Restart</button>
+                <button id="category-4">Philosophy</button>
+                <button id="category-5">Language</button>
+            </div>
+            <div class="result">
+                <p id="score">Score: 0</p>
+            </di>
+        </div>
+        
+        <div id="questionContainer" style="display:none;">
+            <h2 id="question"></h2>
+            <ul id="answers"></ul>
+        </div>
+        <button id="restartBtn">Restart</button>
     </section>
 </body>
 </html>
