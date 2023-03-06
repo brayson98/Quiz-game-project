@@ -1,27 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const geographyQuestions = require("./geography");
-const historyQuestions = require("./history")
-const literatureQuestions = require("./literature")
+const apiUrl = 'https://opentdb.com/api.php';
 
 const app = express();
 app.use(cors());
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send(`Welcome to the quiz API!`);
-})
+app.get('/api/questions', async (req, res) => {
+    const { category, difficulty } = req.query;
+  
+    try {
+      const response = await fetch(`${apiUrl}?amount=10&category=${category}&difficulty=${difficulty}`);
+      const data = await response.json();
+      res.json(data.results);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server error');
+    }
+  });
 
-app.get('/geography', (req, res) => {
-    res.send(geographyQuestions)
-})
+  module.exports = app;
 
-app.get('/history', (req, res) => {
-    res.send(historyQuestions)
-})
-
-app.get('/literature', (req, res) => {
-    res.send(literatureQuestions)
-})
-
-module.exports = app;
