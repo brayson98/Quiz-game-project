@@ -1,0 +1,73 @@
+
+body {
+    background-color: #227c9d;
+    padding: 1rem;
+}
+
+.logo {
+    max-height: 100px;
+    display: inline-block;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+}
+
+form {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 1.5rem;
+}
+
+
+#category {
+    font-size: 1.2rem;
+    margin: 0 10%;
+    border-radius: 5px;
+    
+}
+
+button {
+    min-width: 40%;
+    min-height: 50px;
+    cursor: pointer;
+
+    margin: auto;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid black;
+    border-radius: 5px;
+
+    font-size: 1rem;
+}
+
+#container {
+    background-color: #7ff0e5;
+    margin: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+
+
+    width: 500px;
+    min-height: 400px;
+
+    border-radius: 10px;
+
+}
+
+#question {
+    border: 3px double black;
+    border-radius: 5px;
+    min-width: 70%;
+    margin: auto;
+    padding: 20px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+
+    font-size: 1.5rem;
+
+}
