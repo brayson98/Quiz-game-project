@@ -8,8 +8,6 @@ app.use(cors());
 app.use(express.json())
 
 
-
-
 app.get('/api/questions', async (req, res) => {
     const { category, difficulty } = req.query;
   
