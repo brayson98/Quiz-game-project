@@ -42,15 +42,20 @@ async function startQuiz(category) {
         if (answer === question.correct_answer) {
           score++;
           scoreEl.innerText = `Score: ${score}`;
-          button.style.backgroundColor = "green";
+          button.style.backgroundColor = "#a8dadc";
+          btn.style.border = 0;
+          btn.style.color = "white";
+
         } else {
-          button.style.backgroundColor = "red";
+          button.style.backgroundColor = "#e63946";
         }
         // Disable all buttons after answer is chosen
         answerListEl.querySelectorAll("button").forEach(btn => {
           btn.disabled = true;
           if (btn.innerText === question.correct_answer) {
-            btn.style.backgroundColor = "green";
+            btn.style.backgroundColor = "#a8dadc";
+            btn.style.border = 0;
+            btn.style.color = "white";
           }
         });
         // Go to next question after a delay
