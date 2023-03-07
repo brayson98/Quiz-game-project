@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=3";
+const apiUrl = "https://opentdb.com/api.php?amount=3&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -28,7 +28,7 @@ async function startQuiz(category) {
   showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
 
   function showQuestion(question, index) {
-    questionEl.innerText = `${index+1}. ${question.question}`;
+    questionEl.innerText = decodeURIComponent(`${index+1}. ${question.question}`);
 
     // Shuffle the answers
     const answers = [...question.incorrect_answers, question.correct_answer];
@@ -38,7 +38,7 @@ async function startQuiz(category) {
     answers.forEach(answer => {
       const li = document.createElement("li");
       const button = document.createElement("button");
-      button.innerText = answer;
+      button.innerText = decodeURIComponent(answer);
       button.addEventListener("click", () => {
         if (answer === question.correct_answer) {
           score++;
