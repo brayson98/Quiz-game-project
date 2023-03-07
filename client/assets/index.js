@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=10";
+const apiUrl = "";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -21,7 +21,7 @@ async function startQuiz(category) {
   questionContainer.style.display = "block";
 
   const questions = await fetchQuestions(category);
-
+  
   let currentQuestionIndex = 0;
   let score = 0;
   showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
@@ -79,21 +79,14 @@ function restartQuiz() {
 }
 
 async function fetchQuestions(category) {
-  const url = `${apiUrl}&category=${getCategoryId(category)}`;
+  const url = `${apiUrl}/${category}}`;
+  // if (difficulty) {
+  //   url += `/${difficulty}`;
+  // } 
   const response = await fetch(url);
   const data = await response.json();
   return data.results;
 }
 
-function getCategoryId(category) {
-  switch (category) {
-    case "geography":
-      return 22;
-    case "history":
-      return 23;
-    case "literature":
-      return 10;
-    default:
-      return "";
-  }
-}
+
+

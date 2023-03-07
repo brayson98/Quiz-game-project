@@ -1,24 +1,46 @@
 const express = require('express');
 const cors = require('cors');
 const apiUrl = 'https://opentdb.com/api.php';
+const geographyQuestions = require("./geographyQuestions");
+const literatureQuestions = require('./literatureQuestions');
+const historyQuestions = require('./historyQuestions');
 
 const app = express();
 app.use(cors());
 app.use(express.json())
 
+app.get('/questions/:category/:difficulty', (req, res) => {
+  const category = req.params.category.toLowerCase();
+  const difficulty = req.params.difficulty.toLowerCase();
 
-app.get('/api/questions', async (req, res) => {
-    const { category, difficulty } = req.query;
+  let questions;
+
+  switch (category) {
+    case 'geography':
+      questions = geographyQuestions;
+      break;
+    case 'history':
+      questions = historyQuestions;
+      break;
+    case 'literature':
+      questions = literatureQuestions;
+      break;
+    default:
+      return res.status(404).send(`No questions found for category "${category}".`);
+  }
+
+  const filteredQuestions = questions.filter(question => question.difficulty.toLowerCase() === difficulty);
   
-    try {
-      const response = await fetch(`${apiUrl}?amount=10&category=${category}&difficulty=${difficulty}`);
-      const data = await response.json();
-      res.json(data.results);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Server error');
-    }
-  });
+  if (filteredQuestions.length === 0) {
+    return res.status(404).send(`No questions found for category "${category}" and difficulty "${difficulty}".`);
+  }
+
+  res.send(filteredQuestions);
+});
+
+
+    
+    
 
   module.exports = app;
 
