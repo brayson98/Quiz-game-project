@@ -89,6 +89,8 @@ function submitScore(score) {
   .then(data => {
     currentUser.highScore = data.score;
     console.log(data);
+    console.log(currentUser.highScore);
+    document.getElementById("highscore").textContent = `Highscore: ${currentUser.highScore}`;
   })
   .catch(error => {
     console.error(error);
