@@ -48,6 +48,5 @@ app.post('/submit-score', (req, res) => {
   res.json({ message: 'Score submitted successfully.' });
 });
     
-
-  module.exports = app;
+ module.exports = app;
 
