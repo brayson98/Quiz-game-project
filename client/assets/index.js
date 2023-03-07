@@ -1,4 +1,4 @@
-const apiUrl = "";
+const apiUrl = "https://opentdb.com/api.php?amount=10";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -8,20 +8,17 @@ const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
-const restartBtn = document.getElementById("restartBtn");
 
 geographyBtn.addEventListener("click", () => startQuiz("geography"));
 historyBtn.addEventListener("click", () => startQuiz("history"));
 literatureBtn.addEventListener("click", () => startQuiz("literature"));
-
-restartBtn.addEventListener("click", restartQuiz);
 
 async function startQuiz(category) {
   categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
 
   const questions = await fetchQuestions(category);
-  
+
   let currentQuestionIndex = 0;
   let score = 0;
   showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
@@ -42,20 +39,15 @@ async function startQuiz(category) {
         if (answer === question.correct_answer) {
           score++;
           scoreEl.innerText = `Score: ${score}`;
-          button.style.backgroundColor = "#a8dadc";
-          btn.style.border = 0;
-          btn.style.color = "white";
-
+          button.style.backgroundColor = "green";
         } else {
-          button.style.backgroundColor = "#e63946";
+          button.style.backgroundColor = "red";
         }
         // Disable all buttons after answer is chosen
         answerListEl.querySelectorAll("button").forEach(btn => {
           btn.disabled = true;
           if (btn.innerText === question.correct_answer) {
-            btn.style.backgroundColor = "#a8dadc";
-            btn.style.border = 0;
-            btn.style.color = "white";
+            btn.style.backgroundColor = "green";
           }
         });
         // Go to next question after a delay
@@ -74,19 +66,23 @@ async function startQuiz(category) {
     });
   }
 }
-function restartQuiz() {
-    location.reload();
-}
 
 async function fetchQuestions(category) {
-  const url = `${apiUrl}/${category}}`;
-  // if (difficulty) {
-  //   url += `/${difficulty}`;
-  // } 
+  const url = `${apiUrl}&category=${getCategoryId(category)}`;
   const response = await fetch(url);
   const data = await response.json();
   return data.results;
 }
 
-
-
+function getCategoryId(category) {
+  switch (category) {
+    case "geography":
+      return 22;
+    case "history":
+      return 23;
+    case "literature":
+      return 10;
+    default:
+      return "";
+  }
+}
