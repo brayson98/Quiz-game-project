@@ -167,7 +167,7 @@ function submitScore(score) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ username: user.username, score })
+    body: JSON.stringify({ username: currentUser.username, score })
   })
   .then(response => {
     if (!response.ok) {
@@ -176,6 +176,7 @@ function submitScore(score) {
     return response.json();
   })
   .then(data => {
+    currentUser.highScore = data.score;
     console.log(data);
   })
   .catch(error => {
