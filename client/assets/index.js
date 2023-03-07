@@ -4,6 +4,8 @@ const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
 const historyBtn = document.getElementById("historyBtn");
 const literatureBtn = document.getElementById("literatureBtn");
+const politicsBtn = document.getElementById("politicsBtn");
+const artBtn = document.getElementById("artBtn");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
@@ -12,6 +14,8 @@ const scoreEl = document.getElementById("score");
 geographyBtn.addEventListener("click", () => startQuiz("geography"));
 historyBtn.addEventListener("click", () => startQuiz("history"));
 literatureBtn.addEventListener("click", () => startQuiz("literature"));
+politicsBtn.addEventListener("click", () => startQuiz("politics"));
+artBtn.addEventListener("click", () => startQuiz("art"));
 
 async function startQuiz(category) {
   categoriesContainer.style.display = "none";
@@ -83,7 +87,19 @@ function getCategoryId(category) {
       return 23;
     case "literature":
       return 10;
+    case "politics":
+      return 24;
+    case "art":
+      return 25;
     default:
       return "";
   }
 }
+
+const restartButton = document.getElementById("restartBtn");
+
+restartButton.addEventListener("click", function() {
+    score = 0;
+    scoreEl.innerText = `Score: ${score}`;
+    startQuiz();
+});
