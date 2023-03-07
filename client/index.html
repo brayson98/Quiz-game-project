@@ -7,6 +7,7 @@
     <title>Quiz Game</title>
     <link rel="stylesheet" href="./assets/style.css">
     <script defer src="assets/index.js"></script>
+    <script defer src="assets/login.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +15,7 @@
 
 </head>
 <body>
+ 
     <section class="container">
         <div class="header">
             <div class="logo">
@@ -22,19 +24,40 @@
             <div class="title">
                 <h1>Quiz Game</h1>
             </div>
-           
+            <div id="login">
+
+                <form id="login-form">
+                    <input type="text" id="username-input" placeholder="Username" name="username">
+                    <input type="password" id="password-input" placeholder="Password" name="password">
+                    <button type="button" onclick="login()">Log In</button>
+                </form>
+                <div id="login-message"></div>
+            </div>
+            <form id="signup-form">
+                <input type="text" id="new-username" placeholder="Username">
+                <input type="password" id="new-password" placeholder="Password">
+                <button type="submit">Sign Up</button>
+            </form>
+            <div id="signup-message"></div>
+            
         </div>
     </section>
     <div class="divider"></div>
+    <div id="userStats">
+
+        <div id="welcome">Welcome, <span id="username"></span>!</div>
+        <p id="highscore">Highscore: </p>
+    </div>
+
     <section class="container">
         <div class="categoryList" >
-            <h2>Select category</h2>
+            <h2 id="selectCategory">Select category</h2>
             <div id="categories">
                 <button id="geographyBtn">Geography</button>
                 <button id="historyBtn">History</button>
                 <button id="literatureBtn">Literature</button>
-                <button id="category-4">Philosophy</button>
-                <button id="category-5">Language</button>
+                <button id="politicsBtn">Politics</button>
+                <button id="artBtn">Art</button>
             </div>
             <div class="result">
                 <p class="score">Score: <span id="score"></span></p>

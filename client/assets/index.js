@@ -1,24 +1,26 @@
-const apiUrl = "https://opentdb.com/api.php?amount=1";
+const apiUrl = "https://opentdb.com/api.php?amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
 const historyBtn = document.getElementById("historyBtn");
 const literatureBtn = document.getElementById("literatureBtn");
+const politicsBtn = document.getElementById("politicsBtn");
+const artBtn = document.getElementById("artBtn");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
-const restartBtn = document.getElementById("restartBtn");
 
 geographyBtn.addEventListener("click", () => startQuiz("geography"));
 historyBtn.addEventListener("click", () => startQuiz("history"));
 literatureBtn.addEventListener("click", () => startQuiz("literature"));
-
-restartBtn.addEventListener("click", restartQuiz);
+politicsBtn.addEventListener("click", () => startQuiz("politics"));
+artBtn.addEventListener("click", () => startQuiz("art"));
 
 let currentQuestionIndex = 0;
 
 async function startQuiz(category) {
+  document.getElementById("selectCategory").style.display = "none"; 
   categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
 
@@ -26,10 +28,11 @@ async function startQuiz(category) {
   showQuestion(category, currentQuestionIndex);
 }
 
+
 async function showQuestion(category, index) {
   
   const question = await fetchQuestions(category);
-  questionEl.innerText = `${index+1}. ${question[0].question}`;
+  questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
 
   // Shuffle the answers
   const answers = [...question[0].incorrect_answers, question[0].correct_answer];
@@ -39,7 +42,7 @@ async function showQuestion(category, index) {
   answers.forEach(answer => {
     const li = document.createElement("li");
     const button = document.createElement("button");
-    button.innerText = answer;
+    button.innerText = decodeURIComponent(answer);
     if (answer === question[0].correct_answer) {
       button.setAttribute("class", "correct");
     } else {
@@ -55,6 +58,7 @@ async function showQuestion(category, index) {
           showQuestion(category, currentQuestionIndex);
         }
       }, 1500);
+
     });
     li.appendChild(button);
     answerListEl.appendChild(li);
@@ -83,10 +87,6 @@ const markAnswer = (button) => {
   currentQuestionIndex++;
 }
 
-function restartQuiz() {
-    location.reload();
-}
-
 async function fetchQuestions(category) {
   const url = `${apiUrl}&category=${getCategoryId(category)}`;
   const response = await fetch(url);
@@ -102,7 +102,19 @@ function getCategoryId(category) {
       return 23;
     case "literature":
       return 10;
+    case "politics":
+      return 24;
+    case "art":
+      return 25;
     default:
       return "";
   }
 }
+
+const restartButton = document.getElementById("restartBtn");
+
+restartButton.addEventListener("click", function() {
+    score = 0;
+    scoreEl.innerText = `Score: ${score}`;
+    startQuiz();
+});
