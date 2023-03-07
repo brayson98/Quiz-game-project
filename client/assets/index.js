@@ -18,6 +18,7 @@ politicsBtn.addEventListener("click", () => startQuiz("politics"));
 artBtn.addEventListener("click", () => startQuiz("art"));
 
 async function startQuiz(category) {
+  document.getElementById("selectCategory").style.display = "none"; 
   categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
 

@@ -25,6 +25,9 @@ function login() {
           displayLoggedIn();
       } 
       document.getElementById("login-message").innerHTML = data.message;
+      setTimeout(() => {
+        document.getElementById("login-message").innerHTML = "";
+      }, 2000);
 })
 .catch(error => console.error(error));
 }
@@ -35,13 +38,8 @@ signupForm.addEventListener('submit', (event) => {
 
   const newUsername = document.getElementById('new-username').value;
   const newPassword = document.getElementById('new-password').value;
-  const confirmNewPassword = document.getElementById('confirm-password').value;
 
-  // Check that password and confirm password fields match
-  if (newPassword !== confirmNewPassword) {
-    console.error('Passwords do not match');
-    return;
-  }
+ 
 
   const response = fetch('http://localhost:3000/signup', {
     method: 'POST',
@@ -53,15 +51,20 @@ signupForm.addEventListener('submit', (event) => {
   .then(response => {
     if (response.ok) {
       // Signup successful
+      signupForm.style.display = "none";
       return response.json();
     } else {
-      // Signup failed
-      throw new Error('Username already taken.');
+        // Signup failed
+        throw new Error('Username already taken.');
     }
-  })
-  .then(data => {
+})
+.then(data => {
     // Update UI with user data (e.g. high score)
-    console.log(data);
+    document.getElementById("signup-message").innerHTML = data.message;
+    setTimeout(() => {
+        document.getElementById("signup-message").innerHTML = "";
+        console.log(data);
+    }, 2000)
   })
   .catch(error => {
     // Display error message to user
@@ -98,6 +101,7 @@ function displayLoggedIn() {
 
   const welcomeMessage = document.getElementById("welcome");
   welcomeMessage.textContent = `Welcome, ${currentUser.username}!`;
+  welcomeMessage.style.display = "block";
 
   const highscore = document.getElementById("highscore");
   highscore.textContent = `Highscore: ${currentUser.highScore}`;
