@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=3&encode=url3986";
+const apiUrl = "https://opentdb.com/api.php?amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -17,60 +17,74 @@ literatureBtn.addEventListener("click", () => startQuiz("literature"));
 politicsBtn.addEventListener("click", () => startQuiz("politics"));
 artBtn.addEventListener("click", () => startQuiz("art"));
 
+let currentQuestionIndex = 0;
+
 async function startQuiz(category) {
   document.getElementById("selectCategory").style.display = "none"; 
   categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
 
-  const questions = await fetchQuestions(category);
+  scoreEl.textContent = 0;
+  showQuestion(category, currentQuestionIndex);
+}
 
-  let currentQuestionIndex = 0;
-  let score = 0;
-  showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
 
-  function showQuestion(question, index) {
-    questionEl.innerText = decodeURIComponent(`${index+1}. ${question.question}`);
+async function showQuestion(category, index) {
+  
+  const question = await fetchQuestions(category);
+  questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
 
-    // Shuffle the answers
-    const answers = [...question.incorrect_answers, question.correct_answer];
-    answers.sort(() => Math.random() - 0.5);
+  // Shuffle the answers
+  const answers = [...question[0].incorrect_answers, question[0].correct_answer];
+  answers.sort(() => Math.random() - 0.5);
 
-    answerListEl.innerHTML = "";
-    answers.forEach(answer => {
-      const li = document.createElement("li");
-      const button = document.createElement("button");
-      button.innerText = decodeURIComponent(answer);
-      button.addEventListener("click", () => {
-        if (answer === question.correct_answer) {
-          score++;
-          scoreEl.innerText = `Score: ${score}`;
-          button.style.backgroundColor = "green";
+  answerListEl.innerHTML = "";
+  answers.forEach(answer => {
+    const li = document.createElement("li");
+    const button = document.createElement("button");
+    button.innerText = decodeURIComponent(answer);
+    if (answer === question[0].correct_answer) {
+      button.setAttribute("class", "correct");
+    } else {
+      button.setAttribute("class", "incorrect")
+    }
+    button.addEventListener("click", () => {
+      markAnswer(button)
+      setTimeout(() => {
+        if (currentQuestionIndex >= 10) {
+          // End of quiz
+          alert(`Quiz finished. You scored ${scoreEl.textContent}/${currentQuestionIndex}.`);
         } else {
-          button.style.backgroundColor = "red";
+          showQuestion(category, currentQuestionIndex);
         }
-        // Disable all buttons after answer is chosen
-        answerListEl.querySelectorAll("button").forEach(btn => {
-          btn.disabled = true;
-          if (btn.innerText === question.correct_answer) {
-            btn.style.backgroundColor = "green";
-          }
-        });
-        // Go to next question after a delay
-        setTimeout(() => {
-          currentQuestionIndex++;
-          if (currentQuestionIndex >= questions.length) {
-            // End of quiz
-            submitScore(score);
-            alert(`Quiz finished. You scored ${score}/${questions.length}.`);
-          } else {
-            showQuestion(questions[currentQuestionIndex], currentQuestionIndex);
-          }
-        }, 1500);
-      });
-      li.appendChild(button);
-      answerListEl.appendChild(li);
+      }, 1500);
+
     });
+    li.appendChild(button);
+    answerListEl.appendChild(li);
+  });    
+}
+
+const markAnswer = (button) => {
+  if (button.getAttribute("class") === "correct") {
+    scoreEl.innerText ++
+    button.style.backgroundColor = "#06d6a0";
+    button.style.border = 0;
+    button.style.color = "white";
+  } else {
+    button.style.backgroundColor = "#e63946";
   }
+  // Disable all buttons after answer is chosen
+  answerListEl.querySelectorAll("button").forEach(btn => {
+    btn.disabled = true;
+    if (btn.getAttribute("class") === "correct") {
+      btn.style.backgroundColor = "#06d6a0";
+      btn.style.border = 0;
+      btn.style.color = "white";
+    }
+  });
+  // Go to next question after a delay
+  currentQuestionIndex++;
 }
 
 async function fetchQuestions(category) {

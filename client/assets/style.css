@@ -79,7 +79,7 @@ body {
     justify-content: center;
     text-align: center;
 }
-#score {
+.score {
 
     font-style: 600;
     font-size: larger;
