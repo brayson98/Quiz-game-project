@@ -50,7 +50,7 @@
     </div>
 
     <section class="container">
-        <div class="categoryList" >
+        <div class="categoryList" id="categoryList" >
             <h2 id="selectCategory">Select category</h2>
             <div id="categories">
                 <button id="geographyBtn">Geography</button>
@@ -63,12 +63,18 @@
                 <p class="score">Score: <span id="score"></span></p>
             </di>
         </div>
-        
+        <div>
+            
+        </div>
         <div class="divQuestion" id="questionContainer" style="display:none;">
             <h2 id="question"></h2>
             <ul id="answers"></ul>
+            <div class="divRestart">
+               
+                <button id="restartBtn">Restart Quiz</button>
+                <button id="selectNewCategory">Select Category</button>
+            </div>
         </div>
-        <button id="restartBtn">Restart</button>
     </section>
 </body>
 </html>
