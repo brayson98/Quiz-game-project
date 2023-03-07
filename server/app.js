@@ -1,43 +1,37 @@
 const express = require('express');
 const cors = require('cors');
-const apiUrl = 'https://opentdb.com/api.php';
-const geographyQuestions = require("./geographyQuestions");
-const literatureQuestions = require('./literatureQuestions');
-const historyQuestions = require('./historyQuestions');
+const users = require("./users");
 
 const app = express();
 app.use(cors());
 app.use(express.json())
 
-app.get('/questions/:category/:difficulty', (req, res) => {
-  const category = req.params.category.toLowerCase();
-  const difficulty = req.params.difficulty.toLowerCase();
-
-  let questions;
-
-  switch (category) {
-    case 'geography':
-      questions = geographyQuestions;
-      break;
-    case 'history':
-      questions = historyQuestions;
-      break;
-    case 'literature':
-      questions = literatureQuestions;
-      break;
-    default:
-      return res.status(404).send(`No questions found for category "${category}".`);
+// login route
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(user => user.username === username && user.password === password);
+  if (user) {
+    res.status(200).json({ message: "Login successful!", highScore: user.highScore });
+  } else {
+    res.status(401).json({ message: "Invalid username or password." });
   }
-
-  const filteredQuestions = questions.filter(question => question.difficulty.toLowerCase() === difficulty);
-  
-  if (filteredQuestions.length === 0) {
-    return res.status(404).send(`No questions found for category "${category}" and difficulty "${difficulty}".`);
-  }
-
-  res.send(filteredQuestions);
 });
 
+// signup route
+app.post("/signup", (req, res) => {
+  const { username, password } = req.body;
+  const userExists = users.find(user => user.username === username);
+  if (userExists) {
+    res.status(409).json({ message: "Username already taken." });
+  } else {
+    users.push({ username, password, highScore: 0 });
+    res.status(201).json({ message: "Signup successful!", highScore: 0 });
+  }
+});
+// get all users
+app.get("/users", (req, res) => {
+  res.send(users);
+})
 
     
     
