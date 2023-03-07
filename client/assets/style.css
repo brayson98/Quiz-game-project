@@ -149,9 +149,7 @@ form {
 
     padding-bottom: 5%;
 }
-#restartBtn {
-    
-  }
+
   
 #answers {
     display: grid;
@@ -167,4 +165,12 @@ form {
     display: block;
     width: 100%;
     padding: 10px;
+}
+#welcome {
+    display: none;
+}
+
+#userStats {
+    margin-top: 20px;
+    margin-left: 20px;
 }
