@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const apiUrl = 'https://opentdb.com/api.php';
 
-
 const app = express();
 app.use(cors());
 app.use(express.json())
@@ -22,3 +21,4 @@ app.get('/api/questions', async (req, res) => {
   });
 
   module.exports = app;
+
