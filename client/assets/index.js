@@ -18,14 +18,15 @@ politicsBtn.addEventListener("click", () => startQuiz("politics"));
 artBtn.addEventListener("click", () => startQuiz("art"));
 
 let currentQuestionIndex = 0;
+let score = 0;
 
 async function startQuiz(category) {
   document.getElementById("selectCategory").style.display = "none"; 
   categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
-
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
+  
 }
 
 
@@ -51,11 +52,13 @@ async function showQuestion(category, index) {
     button.addEventListener("click", () => {
       markAnswer(button)
       setTimeout(() => {
-        if (currentQuestionIndex >= 10) {
+        if (currentQuestionIndex >= 3) {
           // End of quiz
-          alert(`Quiz finished. You scored ${scoreEl.textContent}/${currentQuestionIndex}.`);
+          submitScore(score);
+          alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
         } else {
           showQuestion(category, currentQuestionIndex);
+          console.log(score);
         }
       }, 1500);
 
@@ -67,7 +70,8 @@ async function showQuestion(category, index) {
 
 const markAnswer = (button) => {
   if (button.getAttribute("class") === "correct") {
-    scoreEl.innerText ++
+    score ++;
+    scoreEl.innerText = `${score}`;
     button.style.backgroundColor = "#06d6a0";
     button.style.border = 0;
     button.style.color = "white";
@@ -115,6 +119,7 @@ const restartButton = document.getElementById("restartBtn");
 
 restartButton.addEventListener("click", function() {
     score = 0;
+    currentQuestionIndex = 0;
     scoreEl.innerText = `Score: ${score}`;
     startQuiz();
 });

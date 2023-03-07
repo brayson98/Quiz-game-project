@@ -17,7 +17,7 @@ function login() {
     .then(response => response.json())
     .then(data => {
       if (data.message === "Login successful!") {
-        console.log(data);
+          console.log(data);
           currentUser = {
             username: username,
             highScore: data.highScore
@@ -63,7 +63,6 @@ signupForm.addEventListener('submit', (event) => {
     document.getElementById("signup-message").innerHTML = data.message;
     setTimeout(() => {
         document.getElementById("signup-message").innerHTML = "";
-        console.log(data);
     }, 2000)
   })
   .catch(error => {
@@ -88,8 +87,6 @@ function submitScore(score) {
   })
   .then(data => {
     currentUser.highScore = data.score;
-    console.log(data);
-    console.log(currentUser.highScore);
     document.getElementById("highscore").textContent = `Highscore: ${currentUser.highScore}`;
   })
   .catch(error => {
