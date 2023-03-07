@@ -33,8 +33,5 @@ app.get("/users", (req, res) => {
   res.send(users);
 })
 
-    
-    
-
-  module.exports = app;
+module.exports = app
 
