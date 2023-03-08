@@ -1,11 +1,6 @@
 const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
-const geographyBtn = document.getElementById("geographyBtn");
-const historyBtn = document.getElementById("historyBtn");
-const literatureBtn = document.getElementById("literatureBtn");
-const politicsBtn = document.getElementById("politicsBtn");
-const artBtn = document.getElementById("artBtn");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
@@ -16,35 +11,13 @@ const timedModeBtn = document.getElementById("timedModeBtn");
 let mode;
 let category;
 
-geographyBtn.addEventListener("click", () => {
+const extractCategory = (e) => {
+  category = (e.target.getAttribute("class"))
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
-  category = "geography"
-});
+}
 
-historyBtn.addEventListener("click", () => {
-  document.getElementById("categoryList").style.display = "none";
-  document.getElementById("modeList").style.display = "unset";
-  category = "history"
-});
-
-literatureBtn.addEventListener("click", () => {
-  document.getElementById("categoryList").style.display = "none";
-  document.getElementById("modeList").style.display = "unset";
-  category = "literature"
-});
-
-politicsBtn.addEventListener("click", () => {
-  document.getElementById("categoryList").style.display = "none";
-  document.getElementById("modeList").style.display = "unset";
-  category = "politics"
-});
-
-artBtn.addEventListener("click", () => {
-  document.getElementById("categoryList").style.display = "none";
-  document.getElementById("modeList").style.display = "unset";
-  category = "art"
-});
+categoriesContainer.addEventListener("click", extractCategory)
 
 standardModeBtn.addEventListener("click", () => {
   document.getElementById("modeList").style.display = "none";
@@ -59,12 +32,8 @@ timedModeBtn.addEventListener("click", () => {
   document.getElementById("modeList").style.display = "none";
   mode = "timed"
   timerElement.style.display = "unset";
-  
   startQuiz(category)
 })
-
-
-
 
 const countdown = setInterval(() => {
   if (timeLeft > 0) {
@@ -78,12 +47,10 @@ const countdown = setInterval(() => {
   }
 }, 1000);
 
-
 let score = 0;
 let currentQuestionIndex = 0; 
 
 async function startQuiz(category) {
-
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
