@@ -37,15 +37,15 @@ body {
     padding: 0;
     margin: 0;
 }
-#categories {
+#categories, #modes {
     text-align: center;
 }
-.categoryList {
+#categoryList, #modeList {
     display: inline;
     margin: 2px;
     align-items: center;
 }
-.categoryList h2{
+.settings h2{
 
     margin: 7% 0 5% 0;
     text-transform: capitalize;
@@ -53,7 +53,7 @@ body {
     text-align: center;
 }
 
-.categoryList button {
+.settings button, #restartBtn {
 
     min-width: 30%;
     min-height: 50px;
@@ -68,7 +68,7 @@ body {
     letter-spacing: .2rem;
 
 }
-.categoryList button:hover {
+.settings button:hover, #restartBtn:hover {
     background-color: #1d3557;
     color: #fff;
     border-color: #fff;
