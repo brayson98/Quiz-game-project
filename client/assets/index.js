@@ -37,13 +37,13 @@ literatureBtn.addEventListener("click", () => {
 politicsBtn.addEventListener("click", () => {
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
-  category = "geography"
+  category = "politics"
 });
 
 artBtn.addEventListener("click", () => {
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
-  category = "geography"
+  category = "art"
 });
 
 standardModeBtn.addEventListener("click", () => {
