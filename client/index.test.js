@@ -14,7 +14,7 @@ describe("getCategoryId", () => {
         expect(typeof getCategoryId() == "number").toEqual(true);
     })
 
-    it("returns correst ID", () => {
+    it("returns correct ID", () => {
         expect(getCategoryId("geography")).toEqual(22);
     })
 })
