@@ -5,7 +5,7 @@
 
 This is a simple quiz game written in Javascript. It uses [Node.js](https://nodejs.org/en/) for the backend, which runs in the terminal environment. We have created a front-facing version that uses input from the user to login and sign up, which run in the web browser. We have also created back-end functionality to store the user's highest score.
 
-![Quiz Game](/Lap%201/2b%7C%7C!2b/Quiz-game-project/client/assets/images/logo.png)
+![Quiz Game](/client/assets/images/logo.png)
 
 ## Installation
 
