@@ -15,7 +15,6 @@ const timedModeBtn = document.getElementById("timedModeBtn");
 
 let mode;
 let category;
-let deadline;
 
 geographyBtn.addEventListener("click", () => {
   document.getElementById("categoryList").style.display = "none";
@@ -53,13 +52,19 @@ standardModeBtn.addEventListener("click", () => {
   startQuiz(category)
 })
 
+let timeLeft = 60; // 60 seconds
+const timerElement = document.getElementById("timer");
+
 timedModeBtn.addEventListener("click", () => {
   document.getElementById("modeList").style.display = "none";
   mode = "timed"
-  deadline = new Date().getTime() + 30000
-  document.getElementById("timer").style.display = "unset";
-  const timerElement = document.getElementById("timer");
-let timeLeft = 60; // 60 seconds
+  timerElement.style.display = "unset";
+  
+  startQuiz(category)
+})
+
+
+
 
 const countdown = setInterval(() => {
   if (timeLeft > 0) {
@@ -67,11 +72,11 @@ const countdown = setInterval(() => {
     timerElement.textContent = timeLeft;
   } else {
     clearInterval(countdown);
-    alert("Time's up!");
+    if (mode === "timed") {
+      alert("Time's up!");
+    }
   }
 }, 1000);
-  startQuiz(category)
-})
 
 
 let currentQuestionIndex = 0;
@@ -88,10 +93,6 @@ async function startQuiz(category) {
 }
 
 async function showQuestion(category, index) {
-
-  if (mode === "timed") {
-    updateTimer(calculateTimeRemaining())
-  }
   
   const question = await fetchQuestions(category);
   questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
@@ -115,8 +116,8 @@ async function showQuestion(category, index) {
       setTimeout(() => {
         if (endCondition()) {
           // End of quiz
-          submitScore(score);
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
+          submitScore(score);
         } else {
           showQuestion(category, currentQuestionIndex);
         }
@@ -153,7 +154,7 @@ const markAnswer = (button) => {
 
 const endCondition = () => {
   
-  if (mode === "standard" && currentQuestionIndex > 3) {
+  if (mode === "standard" && currentQuestionIndex >= 10) {
     return true;
   } else if (mode === "timed" && timeLeft == 0) {
     return true
@@ -161,30 +162,6 @@ const endCondition = () => {
     return false
   }
 }
-
-
-
-// const calculateTimeRemaining = () => {
-//   let timeRemaining
-//   if (deadline > new Date().getTime()) {
-//     timeRemaining = deadline - new Date().getTime()
-//   } else {
-//     timeRemaining = 0
-//   }
-//   return timeRemaining
-// }
-
-// //setInterval(updateTimer(calculateTimeRemaining), 1000)
-
-// const updateTimer = (timeRemaining) => {
-//   let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60))
-//   let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
-//   document.getElementById("minutes").textContent = minutes;
-//   document.getElementById("seconds").textContent = seconds;
-// }
-
-
-
 
 async function fetchQuestions(category) {
   const url = `${apiUrl}&category=${getCategoryId(category)}`;
@@ -221,13 +198,10 @@ restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
     scoreEl.innerText = `${score}`;
-
-    startQuiz(previousCategory);
+    timeLeft = 60;
+    timerElement.style.display = "none"
+    document.getElementById("categoryList").style.display = "block";
+    questionContainer.style.display = "none"
+    location.href = "#";
+    location.href = "#categoryList";
 });
-const selectNewCategory = document.getElementById("selectNewCategory")
-selectNewCategory.addEventListener("click", function() {
-
-  document.getElementById("categoryList").style.display = "block";
-  location.href = "#";
-  location.href = "#categoryList";
-})
