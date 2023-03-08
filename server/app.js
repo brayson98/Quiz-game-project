@@ -45,7 +45,7 @@ app.post('/submit-score', (req, res) => {
     return res.status(404).json({ message: 'User not found.' });
   }
   users[userIndex].highScore = Math.max(users[userIndex].highScore, score);
-  res.json({ message: 'Score submitted successfully.', score });
+  res.status(200).json({ message: 'Score submitted successfully.',score: users[userIndex].highScore });
 });
     
  module.exports = app;

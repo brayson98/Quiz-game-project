@@ -16,8 +16,8 @@ const extractCategory = (e) => {
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
 }
-
 categoriesContainer.addEventListener("click", extractCategory)
+
 
 standardModeBtn.addEventListener("click", () => {
   document.getElementById("modeList").style.display = "none";
@@ -35,13 +35,14 @@ timedModeBtn.addEventListener("click", () => {
   startQuiz(category)
 })
 
-const countdown = setInterval(() => {
+  const countdown = setInterval(() => {
   if (timeLeft > 0) {
     timeLeft--;
     timerElement.textContent = timeLeft;
   } else {
     clearInterval(countdown);
     if (mode === "timed") {
+      submitScore(score);
       alert("Time's up!");
     }
   }
@@ -54,8 +55,8 @@ async function startQuiz(category) {
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
-  var element = document.querySelector("#selectNewCategory");
-  element.scrollIntoView();
+  // var element = document.querySelector("#categoryList");
+  // element.scrollIntoView();
   
 }
 
