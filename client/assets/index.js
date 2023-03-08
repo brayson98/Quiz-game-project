@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=1&encode=url3986";
+const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -58,7 +58,6 @@ async function showQuestion(category, index) {
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
         } else {
           showQuestion(category, currentQuestionIndex);
-          console.log(score);
         }
       }, 1500);
 
