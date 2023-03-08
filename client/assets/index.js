@@ -15,7 +15,6 @@ const extractCategory = (e) => {
   category = (e.target.getAttribute("class"))
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
-  console.log(categoriesContainer);
 }
 categoriesContainer.addEventListener("click", extractCategory)
 
@@ -36,13 +35,14 @@ timedModeBtn.addEventListener("click", () => {
   startQuiz(category)
 })
 
-const countdown = setInterval(() => {
+  const countdown = setInterval(() => {
   if (timeLeft > 0) {
     timeLeft--;
     timerElement.textContent = timeLeft;
   } else {
     clearInterval(countdown);
     if (mode === "timed") {
+      submitScore(score);
       alert("Time's up!");
     }
   }
