@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
+    <title>SmartStudy</title>
     <link rel="stylesheet" href="./assets/style.css">
     <script defer src="assets/index.js"></script>
     <script defer src="assets/login.js"></script>
@@ -22,7 +22,7 @@
                 <img src="./assets/images/logo.png" alt="logo"/>
             </div>
             <div class="title">
-                <h1>Quiz Game</h1>
+                <h1>SmartStudy</h1>
             </div>
             <div id="login">
 
@@ -50,25 +50,39 @@
     </div>
 
     <section class="container">
-        <div class="categoryList" >
-            <h2 id="selectCategory">Select category</h2>
-            <div id="categories">
-                <button id="geographyBtn">Geography</button>
-                <button id="historyBtn">History</button>
-                <button id="literatureBtn">Literature</button>
-                <button id="politicsBtn">Politics</button>
-                <button id="artBtn">Art</button>
+        <div class="settings">
+            <div id="categoryList">
+                <h2 id="selectCategory">Select category</h2>
+                <div id="categories">
+                    <button id="geographyBtn" class="geography">Geography</button>
+                    <button id="historyBtn" class="history">History</button>
+                    <button id="literatureBtn" class="literature">Literature</button>
+                    <button id="politicsBtn" class="politics">Politics</button>
+                    <button id="artBtn" class="art">Art</button>
+                </div>
+                
             </div>
+            <div id="modeList" style="display:none">
+                <h2 id="selectMode">Select mode</h2>
+                <div id="modes">
+                    <button id="standardModeBtn">Standard</button>
+                    <button id="timedModeBtn">Time Trial</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="divQuestion" id="questionContainer" style="display:none;">
+            <p style="display:none" id="timer">60</p>
             <div class="result">
                 <p class="score">Score: <span id="score"></span></p>
-            </di>
-        </div>
-        
-        <div class="divQuestion" id="questionContainer" style="display:none;">
+            </div>
             <h2 id="question"></h2>
             <ul id="answers"></ul>
+            <div class="divRestart">
+                <button id="restartBtn">Restart Quiz</button>
+
+            </div>
         </div>
-        <button id="restartBtn">Restart</button>
     </section>
 </body>
 </html>

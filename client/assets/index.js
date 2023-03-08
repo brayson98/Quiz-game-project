@@ -1,34 +1,63 @@
-const apiUrl = "https://opentdb.com/api.php?amount=1&encode=url3986";
+const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
-const geographyBtn = document.getElementById("geographyBtn");
-const historyBtn = document.getElementById("historyBtn");
-const literatureBtn = document.getElementById("literatureBtn");
-const politicsBtn = document.getElementById("politicsBtn");
-const artBtn = document.getElementById("artBtn");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
+const standardModeBtn = document.getElementById("standardModeBtn");
+const timedModeBtn = document.getElementById("timedModeBtn");
 
-geographyBtn.addEventListener("click", () => startQuiz("geography"));
-historyBtn.addEventListener("click", () => startQuiz("history"));
-literatureBtn.addEventListener("click", () => startQuiz("literature"));
-politicsBtn.addEventListener("click", () => startQuiz("politics"));
-artBtn.addEventListener("click", () => startQuiz("art"));
+let mode;
+let category;
 
-let currentQuestionIndex = 0;
+const extractCategory = (e) => {
+  category = (e.target.getAttribute("class"))
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+}
+
+categoriesContainer.addEventListener("click", extractCategory)
+
+standardModeBtn.addEventListener("click", () => {
+  document.getElementById("modeList").style.display = "none";
+  mode = "standard"
+  startQuiz(category)
+})
+
+let timeLeft = 60; // 60 seconds
+const timerElement = document.getElementById("timer");
+
+timedModeBtn.addEventListener("click", () => {
+  document.getElementById("modeList").style.display = "none";
+  mode = "timed"
+  timerElement.style.display = "unset";
+  startQuiz(category)
+})
+
+const countdown = setInterval(() => {
+  if (timeLeft > 0) {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+  } else {
+    clearInterval(countdown);
+    if (mode === "timed") {
+      alert("Time's up!");
+    }
+  }
+}, 1000);
+
 let score = 0;
+let currentQuestionIndex = 0; 
 
 async function startQuiz(category) {
-  document.getElementById("selectCategory").style.display = "none"; 
-  categoriesContainer.style.display = "none";
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
+  var element = document.querySelector("#selectNewCategory");
+  element.scrollIntoView();
   
 }
-
 
 async function showQuestion(category, index) {
   
@@ -52,13 +81,12 @@ async function showQuestion(category, index) {
     button.addEventListener("click", () => {
       markAnswer(button)
       setTimeout(() => {
-        if (currentQuestionIndex >= 3) {
+        if (endCondition()) {
           // End of quiz
-          submitScore(score);
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
+          submitScore(score);
         } else {
           showQuestion(category, currentQuestionIndex);
-          console.log(score);
         }
       }, 1500);
 
@@ -91,6 +119,17 @@ const markAnswer = (button) => {
   currentQuestionIndex++;
 }
 
+const endCondition = () => {
+  
+  if (mode === "standard" && currentQuestionIndex >= 10) {
+    return true;
+  } else if (mode === "timed" && timeLeft == 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
 async function fetchQuestions(category) {
   const url = `${apiUrl}&category=${getCategoryId(category)}`;
   const response = await fetch(url);
@@ -101,14 +140,19 @@ async function fetchQuestions(category) {
 function getCategoryId(category) {
   switch (category) {
     case "geography":
+     previousCategory = "geography";
       return 22;
     case "history":
+      previousCategory = "history";
       return 23;
     case "literature":
+      previousCategory = "literature";
       return 10;
     case "politics":
+      previousCategory = "politics";
       return 24;
     case "art":
+      previousCategory = "art";
       return 25;
     default:
       return "";
@@ -120,6 +164,11 @@ const restartButton = document.getElementById("restartBtn");
 restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
-    scoreEl.innerText = `Score: ${score}`;
-    startQuiz();
+    scoreEl.innerText = `${score}`;
+    timeLeft = 60;
+    timerElement.style.display = "none"
+    document.getElementById("categoryList").style.display = "block";
+    questionContainer.style.display = "none"
+    location.href = "#";
+    location.href = "#categoryList";
 });
