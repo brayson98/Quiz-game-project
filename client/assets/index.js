@@ -47,8 +47,8 @@ const countdown = setInterval(() => {
   }
 }, 1000);
 
-let currentQuestionIndex = 0;
 let score = 0;
+let currentQuestionIndex = 0; 
 
 async function startQuiz(category) {
   questionContainer.style.display = "block";
