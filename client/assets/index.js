@@ -10,12 +10,57 @@ const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
+const standardModeBtn = document.getElementById("standardModeBtn");
+const timedModeBtn = document.getElementById("timedModeBtn");
 
-geographyBtn.addEventListener("click", () => startQuiz("geography"));
-historyBtn.addEventListener("click", () => startQuiz("history"));
-literatureBtn.addEventListener("click", () => startQuiz("literature"));
-politicsBtn.addEventListener("click", () => startQuiz("politics"));
-artBtn.addEventListener("click", () => startQuiz("art"));
+let mode;
+let category;
+let deadline;
+
+geographyBtn.addEventListener("click", () => {
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+  category = "geography"
+});
+
+historyBtn.addEventListener("click", () => {
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+  category = "history"
+});
+
+literatureBtn.addEventListener("click", () => {
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+  category = "literature"
+});
+
+politicsBtn.addEventListener("click", () => {
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+  category = "geography"
+});
+
+artBtn.addEventListener("click", () => {
+  document.getElementById("categoryList").style.display = "none";
+  document.getElementById("modeList").style.display = "unset";
+  category = "geography"
+});
+
+standardModeBtn.addEventListener("click", () => {
+  document.getElementById("modeList").style.display = "none";
+  mode = "standard"
+  startQuiz(category)
+})
+
+timedModeBtn.addEventListener("click", () => {
+  document.getElementById("modeList").style.display = "none";
+  mode = "timed"
+  deadline = new Date().getTime() + 30000
+  document.getElementById("timer").style.display = "unset";
+  startQuiz(category)
+})
+
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -31,6 +76,10 @@ async function startQuiz(category) {
 }
 
 async function showQuestion(category, index) {
+
+  if (mode === "timed") {
+    updateTimer(calculateTimeRemaining())
+  }
   
   const question = await fetchQuestions(category);
   questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
@@ -52,7 +101,7 @@ async function showQuestion(category, index) {
     button.addEventListener("click", () => {
       markAnswer(button)
       setTimeout(() => {
-        if (currentQuestionIndex >= 3) {
+        if (endCondition()) {
           // End of quiz
           submitScore(score);
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
@@ -90,6 +139,39 @@ const markAnswer = (button) => {
   currentQuestionIndex++;
 }
 
+const endCondition = () => {
+  
+  if (mode === "standard" && currentQuestionIndex > 3) {
+    return true;
+  } else if (mode === "timed" && calculateTimeRemaining() == 0) {
+    return true
+  } else {
+    return false
+  }
+}
+
+
+
+const calculateTimeRemaining = () => {
+  let timeRemaining
+  if (deadline > new Date().getTime()) {
+    timeRemaining = deadline - new Date().getTime()
+  } else {
+    timeRemaining = 0
+  }
+  return timeRemaining
+}
+
+//setInterval(updateTimer(calculateTimeRemaining), 1000)
+
+const updateTimer = (timeRemaining) => {
+  let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60))
+  let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
+}
+
+
 async function fetchQuestions(category) {
   const url = `${apiUrl}&category=${getCategoryId(category)}`;
   const response = await fetch(url);
@@ -120,6 +202,7 @@ restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
     scoreEl.innerText = `Score: ${score}`;
+
     startQuiz();
 });
 const selectNewCategory = document.getElementById("selectNewCategory")
