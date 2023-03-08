@@ -58,24 +58,13 @@ timedModeBtn.addEventListener("click", () => {
   mode = "timed"
   deadline = new Date().getTime() + 30000
   document.getElementById("timer").style.display = "unset";
-  const timerElement = document.getElementById("timer");
-let timeLeft = 60; // 60 seconds
-
-const countdown = setInterval(() => {
-  if (timeLeft > 0) {
-    timeLeft--;
-    timerElement.textContent = timeLeft;
-  } else {
-    clearInterval(countdown);
-    alert("Time's up!");
-  }
-}, 1000);
+  timeLeft = 60;
   startQuiz(category)
 })
 
 
-let currentQuestionIndex = 0;
 let score = 0;
+let currentQuestionIndex = 0; 
 
 async function startQuiz(category) {
 
@@ -89,9 +78,6 @@ async function startQuiz(category) {
 
 async function showQuestion(category, index) {
 
-  if (mode === "timed") {
-    updateTimer(calculateTimeRemaining())
-  }
   
   const question = await fetchQuestions(category);
   questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
@@ -163,26 +149,19 @@ const endCondition = () => {
 }
 
 
+const timerElement = document.getElementById("timer");
+ // 60 seconds
 
-// const calculateTimeRemaining = () => {
-//   let timeRemaining
-//   if (deadline > new Date().getTime()) {
-//     timeRemaining = deadline - new Date().getTime()
-//   } else {
-//     timeRemaining = 0
-//   }
-//   return timeRemaining
-// }
-
-// //setInterval(updateTimer(calculateTimeRemaining), 1000)
-
-// const updateTimer = (timeRemaining) => {
-//   let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60))
-//   let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
-//   document.getElementById("minutes").textContent = minutes;
-//   document.getElementById("seconds").textContent = seconds;
-// }
-
+const countdown = setInterval(() => {
+  let timeLeft = 60;
+  if (timeLeft > 0) {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+  } else {
+    clearInterval(countdown);
+    alert("Time's up!");
+  }
+}, 1000);
 
 
 
