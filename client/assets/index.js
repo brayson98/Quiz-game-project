@@ -1,4 +1,4 @@
-const apiUrl = "https://opentdb.com/api.php?amount=1&encode=url3986";
+const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
 const categoriesContainer = document.getElementById("categories");
 const geographyBtn = document.getElementById("geographyBtn");
@@ -66,14 +66,14 @@ let currentQuestionIndex = 0;
 let score = 0;
 
 async function startQuiz(category) {
-  document.getElementById("selectCategory").style.display = "none"; 
-  categoriesContainer.style.display = "none";
+
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
+  var element = document.querySelector("#selectNewCategory");
+  element.scrollIntoView();
   
 }
-
 
 async function showQuestion(category, index) {
 
@@ -107,7 +107,6 @@ async function showQuestion(category, index) {
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
         } else {
           showQuestion(category, currentQuestionIndex);
-          console.log(score);
         }
       }, 1500);
 
@@ -206,3 +205,11 @@ restartButton.addEventListener("click", function() {
 
     startQuiz();
 });
+const selectNewCategory = document.getElementById("selectNewCategory")
+selectNewCategory.addEventListener("click", function() {
+
+  // document.getElementById("selectCategory").style.display = "block"; 
+  // categoriesContainer.style.display = "block";
+  location.href = "#";
+  location.href = "#categoryList";
+})
