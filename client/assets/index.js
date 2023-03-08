@@ -58,6 +58,18 @@ timedModeBtn.addEventListener("click", () => {
   mode = "timed"
   deadline = new Date().getTime() + 30000
   document.getElementById("timer").style.display = "unset";
+  const timerElement = document.getElementById("timer");
+let timeLeft = 60; // 60 seconds
+
+const countdown = setInterval(() => {
+  if (timeLeft > 0) {
+    timeLeft--;
+    timerElement.textContent = timeLeft;
+  } else {
+    clearInterval(countdown);
+    alert("Time's up!");
+  }
+}, 1000);
   startQuiz(category)
 })
 
@@ -143,7 +155,7 @@ const endCondition = () => {
   
   if (mode === "standard" && currentQuestionIndex > 3) {
     return true;
-  } else if (mode === "timed" && calculateTimeRemaining() == 0) {
+  } else if (mode === "timed" && timeLeft == 0) {
     return true
   } else {
     return false
@@ -152,24 +164,26 @@ const endCondition = () => {
 
 
 
-const calculateTimeRemaining = () => {
-  let timeRemaining
-  if (deadline > new Date().getTime()) {
-    timeRemaining = deadline - new Date().getTime()
-  } else {
-    timeRemaining = 0
-  }
-  return timeRemaining
-}
+// const calculateTimeRemaining = () => {
+//   let timeRemaining
+//   if (deadline > new Date().getTime()) {
+//     timeRemaining = deadline - new Date().getTime()
+//   } else {
+//     timeRemaining = 0
+//   }
+//   return timeRemaining
+// }
 
-//setInterval(updateTimer(calculateTimeRemaining), 1000)
+// //setInterval(updateTimer(calculateTimeRemaining), 1000)
 
-const updateTimer = (timeRemaining) => {
-  let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60))
-  let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
-}
+// const updateTimer = (timeRemaining) => {
+//   let minutes = Math.floor((timeRemaining % (1000 * 3600)) / (1000 * 60))
+//   let seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000)
+//   document.getElementById("minutes").textContent = minutes;
+//   document.getElementById("seconds").textContent = seconds;
+// }
+
+
 
 
 async function fetchQuestions(category) {
@@ -182,14 +196,19 @@ async function fetchQuestions(category) {
 function getCategoryId(category) {
   switch (category) {
     case "geography":
+     previousCategory = "geography";
       return 22;
     case "history":
+      previousCategory = "history";
       return 23;
     case "literature":
+      previousCategory = "literature";
       return 10;
     case "politics":
+      previousCategory = "politics";
       return 24;
     case "art":
+      previousCategory = "art";
       return 25;
     default:
       return "";
@@ -201,15 +220,14 @@ const restartButton = document.getElementById("restartBtn");
 restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
-    scoreEl.innerText = `Score: ${score}`;
+    scoreEl.innerText = `${score}`;
 
-    startQuiz();
+    startQuiz(previousCategory);
 });
 const selectNewCategory = document.getElementById("selectNewCategory")
 selectNewCategory.addEventListener("click", function() {
 
-  // document.getElementById("selectCategory").style.display = "block"; 
-  // categoriesContainer.style.display = "block";
+  document.getElementById("categoryList").style.display = "block";
   location.href = "#";
   location.href = "#categoryList";
 })
