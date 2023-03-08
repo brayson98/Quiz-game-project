@@ -15,9 +15,10 @@ const extractCategory = (e) => {
   category = (e.target.getAttribute("class"))
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
+  console.log(categoriesContainer);
 }
-
 categoriesContainer.addEventListener("click", extractCategory)
+
 
 standardModeBtn.addEventListener("click", () => {
   document.getElementById("modeList").style.display = "none";
@@ -54,8 +55,8 @@ async function startQuiz(category) {
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
-  var element = document.querySelector("#selectNewCategory");
-  element.scrollIntoView();
+  // var element = document.querySelector("#categoryList");
+  // element.scrollIntoView();
   
 }
 
