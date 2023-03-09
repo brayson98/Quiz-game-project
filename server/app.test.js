@@ -147,6 +147,15 @@ describe("app", () => {
                         
              expect(response.statusCode).toBe(404);
              expect(response.body.message).toBe('User not found.');
-        });                         
-});
+        });   
+    });
+    
+    describe('GET /users', () => {
+    it('returns an array of users', async () => {
+        const res = await request(app).get('/users');
+        expect(res.status).toBe(200);
+        expect(res.body).toBeInstanceOf(Array);
+      });
+    });
                     
+        

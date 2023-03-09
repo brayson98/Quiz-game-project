@@ -1,11 +1,8 @@
 const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
-const categories = document.getElementById("categories");
 const questionContainer = document.getElementById("questionContainer");
-const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
-const modes = document.getElementById("modes")
 
 let mode;
 let category;
@@ -15,34 +12,35 @@ const selectCategory = (e) => {
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
 }
-categories.addEventListener("click", selectCategory)
+document.getElementById("categories").addEventListener("click", selectCategory)
 
-let timeLeft = 60; // 60 seconds
+let timeLeft;
 const timerElement = document.getElementById("timer");
+let countdown;
 
 const selectMode = (e) => {
   mode = e.target.getAttribute("id")
   document.getElementById("modeList").style.display = "none";
   if (mode === "timed") {
     timerElement.style.display = "unset";
+    timeLeft = 30;
+    countdown = setInterval(decreaseTimer, 1000)
   }
   startQuiz(category)
 }
 
-modes.addEventListener("click", selectMode)
+document.getElementById("modes").addEventListener("click", selectMode)
 
-  const countdown = setInterval(() => {
+const decreaseTimer = () => {
   if (timeLeft > 0) {
     timeLeft--;
     timerElement.textContent = timeLeft;
   } else {
     clearInterval(countdown);
-    if (mode === "timed") {
-      submitScore(score);
-      alert("Time's up!");
-    }
+    submitScore(score);
+    alert("Time's up!");
   }
-}, 1000);
+}
 
 let score = 0;
 let currentQuestionIndex = 0; 
@@ -51,15 +49,12 @@ async function startQuiz(category) {
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
-  // var element = document.querySelector("#categoryList");
-  // element.scrollIntoView();
-  
 }
 
 async function showQuestion(category, index) {
   
   const question = await fetchQuestions(category);
-  questionEl.innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
+  document.getElementById("question").innerText = decodeURIComponent(`${index+1}. ${question[0].question}`);
 
   // Shuffle the answers
   const answers = [...question[0].incorrect_answers, question[0].correct_answer];
@@ -78,7 +73,7 @@ async function showQuestion(category, index) {
     button.addEventListener("click", () => {
       markAnswer(button)
       setTimeout(() => {
-        if (endCondition()) {
+        if ((mode === "standard" && currentQuestionIndex >= 10) || timeLeft == 0) {
           // End of quiz
           alert(`Quiz finished. You scored ${score}/${currentQuestionIndex}.`);
           submitScore(score);
@@ -112,19 +107,7 @@ const markAnswer = (button) => {
       btn.style.color = "white";
     }
   });
-  // Go to next question after a delay
   currentQuestionIndex++;
-}
-
-const endCondition = () => {
-  
-  if (mode === "standard" && currentQuestionIndex >= 10) {
-    return true;
-  } else if (mode === "timed" && timeLeft == 0) {
-    return true
-  } else {
-    return false
-  }
 }
 
 async function fetchQuestions(category) {
@@ -134,7 +117,7 @@ async function fetchQuestions(category) {
   return data.results;
 }
 
-function getCategoryId(category) {
+const getCategoryId = (category) => {
   switch (category) {
     case "geography":
      previousCategory = "geography";
@@ -161,8 +144,8 @@ const restartButton = document.getElementById("restartBtn");
 restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
+    clearInterval(countdown)
     scoreEl.innerText = `${score}`;
-    timeLeft = 60;
     timerElement.style.display = "none"
     document.getElementById("categoryList").style.display = "block";
     questionContainer.style.display = "none"

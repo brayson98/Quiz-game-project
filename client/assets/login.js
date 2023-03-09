@@ -55,6 +55,7 @@ signupForm.addEventListener('submit', (event) => {
       return response.json();
     } else {
         // Signup failed
+        document.getElementById("signup-message").innerHTML = "User already exists";
         throw new Error('Username already taken.');
     }
 })
