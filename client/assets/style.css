@@ -82,6 +82,7 @@ body {
     border: 1px solid #457b9d;
     color: #fff;
     background-color: #457b9d;
+    border-radius: 3px;
   }
   form {
     border-radius: 10px;
@@ -93,7 +94,7 @@ body {
   #questionContainer {
     background-color: #f1faee;
     padding: 5%;
-    border-radius: 3%;
+    border-radius: 20px;
   }
   #question{
     padding-bottom: 5%;

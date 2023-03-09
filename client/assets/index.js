@@ -18,7 +18,6 @@ let timeLeft;
 const timerElement = document.getElementById("timer");
 let countdown;
 
-
 const selectMode = (e) => {
   mode = e.target.getAttribute("id")
   document.getElementById("modeList").style.display = "none";
