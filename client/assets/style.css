@@ -1,9 +1,16 @@
 /* <img src="https://drive.google.com/uc?export=view&id=1QyO3WAbpLIAyeeiYr-KR6z1AtlXpwmI2" alt="logo"/> */
-
+:root {
+    --white-color: #ffffff;
+    --text-color: #333333;
+    --Primary-color: #1d3557;
+    --accent-color: #457b9d;
+    --red-color: #e63946;
+    --green-color: #06d6a0;
+}
 body {
-    background-color: #fff;
+    background-color: var(--white-color);
     font-family: 'Open Sans', sans-serif;
-    color: #333333;
+    color: var(--text-color);
     padding: 0;
     margin: 0;
     line-height: 32px;
@@ -28,7 +35,7 @@ body {
   }
   .divider {
     height: 1px;
-    background-color: #333333;
+    background-color: var(--text-color);
     padding: 0;
     margin: 0;
   }
@@ -48,10 +55,10 @@ body {
     min-height: 50px;
     cursor: pointer;
     margin: 5px;
-    background-color: #fff;
-    border: 1px solid #1d3557;
+    background-color: var(--white-color);
+    border: 1px solid var(--Primary-color);
     border-radius: 5px;
-    color: #1d3557;
+    color: var(--Primary-color);
     font-size: 1rem;
     line-height: 32px;
     letter-spacing: .2rem;
@@ -59,13 +66,13 @@ body {
   
   }
   .btnTheme button:hover {
-    background-color: #1d3557;
-    color: #fff;
-    border-color: #fff;
+    background-color: var(--Primary-color);
+    color: var(--white-color);
+    border: 0;
   }
   .btnTheme button:disabled {
     background-color: gray;
-    color: #fff;
+    color: var(--white-color);
     border: 0;
   }
   .result {
@@ -79,10 +86,11 @@ body {
     font-size: larger;
     width: 10%;
     padding: 2%;
-    border: 1px solid #457b9d;
-    color: #fff;
-    background-color: #457b9d;
+    border: 1px solid var(--accent-color);
+    color: var(--white-color);
+    background-color: var(--accent-color);
     border-radius: 3px;
+
   }
   form {
     border-radius: 10px;
@@ -120,9 +128,9 @@ body {
     text-align: end;
   }
   .divRestart button {
-    background-color: #457b9d;
-    color: #fff;
-    border-color: #fff;
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    border-color: var(--white-color);
     max-width: auto !important;
   }
   #welcome {
