@@ -17,21 +17,25 @@ const selectCategory = (e) => {
 }
 categories.addEventListener("click", selectCategory)
 
-let timeLeft = 60; // 60 seconds
+let timeLeft; // 60 seconds
 const timerElement = document.getElementById("timer");
+let countdown;
+
 
 const selectMode = (e) => {
   mode = e.target.getAttribute("id")
   document.getElementById("modeList").style.display = "none";
   if (mode === "timed") {
     timerElement.style.display = "unset";
+    timeLeft = 10;
+    countdown = setInterval(decreaseTimer, 1000)
   }
   startQuiz(category)
 }
 
 modes.addEventListener("click", selectMode)
 
-  const countdown = setInterval(() => {
+const decreaseTimer = () => {
   if (timeLeft > 0) {
     timeLeft--;
     timerElement.textContent = timeLeft;
@@ -42,7 +46,9 @@ modes.addEventListener("click", selectMode)
       alert("Time's up!");
     }
   }
-}, 1000);
+}
+
+
 
 let score = 0;
 let currentQuestionIndex = 0; 
@@ -161,11 +167,14 @@ const restartButton = document.getElementById("restartBtn");
 restartButton.addEventListener("click", function() {
     score = 0;
     currentQuestionIndex = 0;
+    clearInterval(countdown)
     scoreEl.innerText = `${score}`;
-    timeLeft = 60;
     timerElement.style.display = "none"
     document.getElementById("categoryList").style.display = "block";
     questionContainer.style.display = "none"
+    timeLeft = 10
     location.href = "#";
     location.href = "#categoryList";
 });
+
+module.exports = getCategoryId;
