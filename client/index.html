@@ -51,32 +51,33 @@
 
     <section class="container">
         <div class="settings">
-            <div id="categoryList">
+            <div id="categoryList" class="subTitles">
                 <h2 id="selectCategory">Select category</h2>
-                <div id="categories">
-                    <button id="geographyBtn" class="geography">Geography</button>
-                    <button id="historyBtn" class="history">History</button>
-                    <button id="literatureBtn" class="literature">Literature</button>
-                    <button id="politicsBtn" class="politics">Politics</button>
-                    <button id="artBtn" class="art">Art</button>
+                <div id="categories" class="btnTheme">
+                    <button id="geography">Geography</button>
+                    <button id="history">History</button>
+                    <button id="literature">Literature</button>
+                    <button id="politics">Politics</button>
+                    <button id="art">Art</button>
                 </div>
                 
             </div>
-            <div id="modeList" style="display:none">
+            <div class="subTitles" id="modeList" style="display:none">
                 <h2 id="selectMode">Select mode</h2>
-                <div id="modes">
-                    <button id="standardModeBtn">Standard</button>
-                    <button id="timedModeBtn">Time Trial</button>
+                <div id="modes" class="btnTheme">
+                    <button id="standard">Standard</button>
+                    <button id="timed">Time Trial</button>
                 </div>
             </div>
 
         </div>
-        <div class="divQuestion" id="questionContainer" style="display:none;">
-            <p style="display:none" id="timer">60</p>
+        <div class="btnTheme"" id="questionContainer" style="display:none;">
+            
             <div class="result">
                 <p class="score">Score: <span id="score"></span></p>
+                <p class="score" style="display:none" id="timer">60</p>
             </div>
-            <h2 id="question"></h2>
+            <p id="question"></p>
             <ul id="answers"></ul>
             <div class="divRestart">
                 <button id="restartBtn">Restart Quiz</button>

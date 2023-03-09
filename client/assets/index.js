@@ -1,47 +1,44 @@
 const apiUrl = "https://opentdb.com/api.php?command=request&amount=1&encode=url3986";
 
-const categoriesContainer = document.getElementById("categories");
+const categories = document.getElementById("categories");
 const questionContainer = document.getElementById("questionContainer");
 const questionEl = document.getElementById("question");
 const answerListEl = document.getElementById("answers");
 const scoreEl = document.getElementById("score");
-const standardModeBtn = document.getElementById("standardModeBtn");
-const timedModeBtn = document.getElementById("timedModeBtn");
+const modes = document.getElementById("modes")
 
 let mode;
 let category;
 
-const extractCategory = (e) => {
-  category = (e.target.getAttribute("class"))
+const selectCategory = (e) => {
+  category = (e.target.getAttribute("id"))
   document.getElementById("categoryList").style.display = "none";
   document.getElementById("modeList").style.display = "unset";
 }
-
-categoriesContainer.addEventListener("click", extractCategory)
-
-standardModeBtn.addEventListener("click", () => {
-  document.getElementById("modeList").style.display = "none";
-  mode = "standard"
-  startQuiz(category)
-})
+categories.addEventListener("click", selectCategory)
 
 let timeLeft = 60; // 60 seconds
 const timerElement = document.getElementById("timer");
 
-timedModeBtn.addEventListener("click", () => {
+const selectMode = (e) => {
+  mode = e.target.getAttribute("id")
   document.getElementById("modeList").style.display = "none";
-  mode = "timed"
-  timerElement.style.display = "unset";
+  if (mode === "timed") {
+    timerElement.style.display = "unset";
+  }
   startQuiz(category)
-})
+}
 
-const countdown = setInterval(() => {
+modes.addEventListener("click", selectMode)
+
+  const countdown = setInterval(() => {
   if (timeLeft > 0) {
     timeLeft--;
     timerElement.textContent = timeLeft;
   } else {
     clearInterval(countdown);
     if (mode === "timed") {
+      submitScore(score);
       alert("Time's up!");
     }
   }
@@ -54,8 +51,8 @@ async function startQuiz(category) {
   questionContainer.style.display = "block";
   scoreEl.textContent = 0;
   showQuestion(category, currentQuestionIndex);
-  var element = document.querySelector("#selectNewCategory");
-  element.scrollIntoView();
+  // var element = document.querySelector("#categoryList");
+  // element.scrollIntoView();
   
 }
 

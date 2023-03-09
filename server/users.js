@@ -1,4 +1,14 @@
 const users = [
+    { 
+     username: 'testuser',
+     password: 'testpassword',
+     highScore: 5
+    },
+    { 
+      username: 'testuser2',
+      password: 'testpassword',
+      highScore: 5
+     },
     {
       username: "john",
       password: "password123",

@@ -1,20 +1,23 @@
+const { default: test } = require("node:test");
 const {getCategoryId} = require("./assets/index");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
-describe("getCategoryId", () => {
+describe("getCategoryId function", () => {
 
-    it("exists", () => {
+    test("exists", () => {
         expect(getCategoryId).toBeDefined();
     })
 
-    it("is a function", () => {
-        expect(getCategoryId instanceof Function).toEqual(true);
+    test("is a function", () => {
+        expect(getCategoryId() instanceof Function).toEqual(true);
     })
 
-    it("returns a number", () => {
+    test("returns a number", () => {
         expect(typeof getCategoryId() == "number").toEqual(true);
     })
 
-    it("returns correct ID", () => {
-        expect(getCategoryId("geography")).toEqual(22);
-    })
+    test("returns correct category id for geography", () => {
+        expect(getCategoryId("geography")).toBe(22);
+      });
 })

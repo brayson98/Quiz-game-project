@@ -97,6 +97,7 @@ function submitScore(score) {
 function displayLoggedIn() {
   const loginForm = document.getElementById("login-form");
   loginForm.style.display = "none";
+  signupForm.style.display = "none";
 
   const welcomeMessage = document.getElementById("welcome");
   welcomeMessage.textContent = `Welcome, ${currentUser.username}!`;
