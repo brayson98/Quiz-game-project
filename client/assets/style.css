@@ -6,7 +6,7 @@
     --accent-color: #457b9d;
     --red-color: #e63946;
     --green-color: #06d6a0;
-  }
+}
 body {
     background-color: var(--white-color);
     font-family: 'Open Sans', sans-serif;
@@ -87,8 +87,8 @@ body {
     width: 10%;
     padding: 2%;
     border: 1px solid var(--accent-color);
-    color: #fff;
-    background-color: #457b9d;
+    color: var(--white-color);
+    background-color: var(--accent-color);
   }
   form {
     border-radius: 10px;
@@ -126,9 +126,9 @@ body {
     text-align: end;
   }
   .divRestart button {
-    background-color: #457b9d;
-    color: #fff;
-    border-color: #fff;
+    background-color: var(--accent-color);
+    color: var(--white-color);
+    border-color: var(--white-color);
     max-width: auto !important;
   }
   #welcome {
